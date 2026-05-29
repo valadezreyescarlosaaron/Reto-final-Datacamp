@@ -1,0 +1,63 @@
+---
+title: "Reto Datacamp: Análisis de Inventarios"
+author: "Valadez Reyes Carlos Aaron"
+format: 
+  html:
+    grid:
+      body-width: 1200px
+lang: es
+---
+
+# Análisis de Inventarios: Identificación de Productos sin Stock
+
+```{python}
+
+#| code-fold: true
+
+import pandas as pd
+
+
+Basededatos_inventarios = 'Basededatos_inventarios.xlsx'
+
+try:
+
+    df = pd.read_excel(Basededatos_inventarios, engine='openpyxl')
+
+    print("Datos cargados exitosamente. Aquí están las primeras filas:\n")
+    print(df.head())
+
+except FileNotFoundError:
+    print(f"Error: No se pudo encontrar el archivo '{Basededatos_inventarios}'. Verifica el nombre y la ruta.")
+except Exception as e:
+    print(f"Ocurrió un error inesperado: {e}")
+
+```
+
+# Confirmación de los inventarios
+
+```{python}
+
+#| code-fold: true
+
+import pandas as pd
+
+# (Asumiendo que ya cargaste tu archivo así)
+basededatos_inventarios = pd.read_excel('basededatos_inventarios.xlsx')
+
+productos_sin_stock = basededatos_inventarios[basededatos_inventarios['Cantidad'] == 0]
+
+# 2. Verificar si se encontraron productos sin inventario
+if not productos_sin_stock.empty:
+    print("\n ¡ALERTA DE INVENTARIO CRÍTICO! ")
+    print("-----------------------------------------")
+    
+    # Recorremos los productos que cumplieron la condición para mostrar la advertencia
+    # Cambia 'Producto' por el nombre exacto de tu columna de nombres
+    for index, fila in productos_sin_stock.iterrows():
+        print(f"⚠️ ADVERTENCIA: El producto '{fila['Producto']}' se encuentra en 0.")
+        
+    print("-----------------------------------------")
+else:
+    print("\n✅ Todo en orden. Todos los productos tienen inventario disponible.")
+
+```
